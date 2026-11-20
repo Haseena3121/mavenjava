@@ -7,6 +7,787 @@ This project is used for Jenkins CI/CD and GitHub Webhook testing.
 This change is being used to test automatic Jenkins builds through a GitHub webhook.
 # Maven Java Project
 
+
+
+
+
+Q1.Docker Compose – Online Boutique Store (25 Marks)
+An online boutique store wants to launch an e-commerce website. The application consists of a mysql backend and an tomcat web server. Create a Docker Compose file to run both applications in separate containers, exposing the mysql backend on port 3306 and tomcat on port 8080.
+Tasks:
+1.	Create a Docker Compose YAML file.
+2.	Configure appropriate port mappings and persistent volumes.
+3.	Start both containers using docker compose
+4.	Verify running containers using docker compose command.
+5.	Access the tomcat server through a web browser.
+Scenario based Questions:
+1.	Your Online Boutique Store application runs on Tomcat using port 8080, and MySQL uses port 3306. You want to access Tomcat through the browser and allow the application to communicate with MySQL. How do you configure port mappings and a custom Docker network in Docker Compose?
+2.	You are running an Online Boutique Store using Tomcat and MySQL containers. After removing and recreating the MySQL container, you notice that all customer registration and product details are lost. Why does this happen, and how can you configure Docker Compose volumes to preserve database data?
+3.	Your Online Boutique Store is deployed using Tomcat and MySQL containers. When you access the application through http://localhost:8080, you receive a Connection Refused error. How do you identify whether the Tomcat container is running, check its logs, verify port mappings, troubleshoot the database connection, and safely stop and remove the containers?
+Q2. Jenkins Pipeline for a Maven Web Project with web hooks	[25 Marks]	
+The Online Boutique Store development team frequently pushes code changes to GitHub. The company wants to trigger the Jenkins Scripted Pipeline automatically whenever developers commit and push changes to the repository. Configure a GitHub webhook and the appropriate Jenkins build trigger to automatically execute the pipeline. The pipeline should perform GitHub clone, Maven clean, build, test, and package operations.
+Tasks:
+
+1. Clone Git Hub repository.( https://github.com/haleema91/LAB-INTERNAL-II-OBS.git)
+
+2. Configure Tomcat web server.
+3. Deploy the application on the Web Server
+4. Create the Pipeline View using Jenkins and show how code changes triggers jenkins using webhooks.
+Scenario based Questions:
+1.	Your project manager asks you to remove previously generated build files before building the Online Boutique Store Maven Java Web Application. Which Maven command should you use in the pipeline?
+2.	Your Online Boutique Store source code is available in a private GitHub repository. Where should you provide the repository URL in the Jenkins pipeline?
+3.	Your Online Boutique Store application is building successfully, but the WAR file is not generated. Which Maven command should you execute in pipeline code?
+
+Q3. Kubernetes – Container Deployment and Auto Scaling and monitoring 
+                                                                                                 [25 MARKS]
+During festival seasons, discount sales, and special promotional offers, thousands of customers access the Online Boutique Store simultaneously to browse products, check prices, and place orders. The company wants to deploy multiple application replicas using Kubernetes to handle increased customer traffic and ensure automatic recovery when application containers fail and monitor application availability using Nagios.
+Tasks:
+1.	Start a Kubernetes cluster using Minikube.
+2.	Create a Kubernetes Deployment nginx with two replicas.
+3.	Expose the nginx using a Kubernetes Service of type NodePort at port 7070.
+4.	Scale the deployment from two to five replicas to handle increased customer traffic.
+5.	Verify the deployment, pods, services using appropriate Kubernetes commands.
+6.	Install and configure Nagios Core using Docker to monitor the Online Boutique Store application.
+
+Scenario based Questions:
+1.	Your Online Boutique Store is running successfully inside Minikube, but customers cannot access it through a web browser. How will you expose the application externally using a NodePort Service and access it through the Minikube service URL?The boutique store administrator wants to confirm whether Nagios is running properly and monitoring the application server. Which commands will you execute to verify Nagios service status and configuration?
+2.	During a festival sale, you scale the Online Boutique Store deployment from two to five replicas. However, some Pods remain in the Pending state. What could be the possible reasons, and how would you troubleshoot them?
+
+Q4. AWS EC2 Deployment – Online Boutique Store     [25 Marks]
+An online boutique company wants to launch its website on AWS. Create an Ubuntu EC2 instance, connect to it using SSH, install Docker, and deploy the website's index.html file using an Nginx Docker container. Verify the website using the EC2 public IPv4 address.
+Task: Deploy the online boutique store on EC2 instance.
+Scenario based Questions:
+1.	The Online Boutique Store administrator has successfully launched an Ubuntu EC2 instance but needs to access it remotely to configure the website. How will you connect to the EC2 instance from your local machine using an SSH key pair? What steps will you follow if the SSH connection fails?
+2.	An online boutique company wants to launch its shopping website on AWS. The administrator needs a Linux server to host the website. How will you launch an Ubuntu EC2 instance, select an appropriate instance type, configure a key pair, and create a Security Group to allow SSH and HTTP traffic?
+3.	The Online Boutique Store Docker container is running successfully on the AWS EC2 instance, but customers are unable to access the website through a browser. How will you identify the network issue, configure the EC2 Security Group to allow inbound HTTP traffic on port 80, and verify the website using the EC2 public IPv4 address?
+		
+		
+		
+		
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Q3. Kubernetes – Container Deployment, Auto Scaling and Monitoring (25 Marks)
+1. Start a Kubernetes cluster using Minikube
+Step 1: Start Minikube
+Open the terminal and execute:
+bash
+minikube start
+Step 2: Verify the cluster status
+bash
+minikube status
+Step 3: Check the Kubernetes nodes
+bash
+kubectl get nodes
+Expected output:
+text
+NAME       STATUS   ROLES           AGE   VERSION
+minikube   Ready    control-plane   1m    v1.xx.x
+2. Create a Kubernetes Deployment with two replicas
+Create a deployment named nginx with two replicas.
+bash
+kubectl create deployment nginx --image=nginx --replicas=2
+Verify the deployment:
+bash
+kubectl get deployments
+Expected output:
+text
+NAME    READY   UP-TO-DATE   AVAILABLE
+nginx   2/2     2            2
+Check the running Pods:
+bash
+kubectl get pods
+Two Nginx Pods should be displayed with the status Running.
+3. Expose Nginx using a NodePort Service at port 7070
+Create a NodePort Service:
+bash
+kubectl expose deployment nginx \
+--type=NodePort \
+--port=7070 \
+--target-port=80
+Here:
+•	--type=NodePort: Exposes the application outside the cluster.
+•	--port=7070: Service port.
+•	--target-port=80: Port on which Nginx listens inside the container.
+Verify the Service:
+bash
+kubectl get services
+To get the assigned NodePort:
+bash
+kubectl describe service nginx
+The NodePort is automatically assigned from the default NodePort range (30000–32767).
+Access the application:
+bash
+minikube service nginx --url
+Copy the generated URL and open it in a web browser.
+You should see the Nginx welcome page.
+4. Scale the deployment from two to five replicas
+During festival sales, customer traffic increases. Kubernetes allows us to increase the number of replicas.
+Execute:
+bash
+kubectl scale deployment nginx --replicas=5
+Verify scaling:
+bash
+kubectl get deployments
+Expected output:
+text
+NAME    READY   UP-TO-DATE   AVAILABLE
+nginx   5/5     5            5
+Check the Pods:
+bash
+kubectl get pods
+Five Nginx Pods should be running.
+Explanation: Scaling increases the number of application instances, helping Kubernetes distribute incoming traffic across multiple Pods through the Service.
+5. Verify deployment, Pods and Services
+Execute the following Kubernetes commands:
+Command	Purpose
+kubectl get nodes	Check cluster nodes
+kubectl get deployments	Check deployments
+kubectl get pods	Check Pod status
+kubectl get services	Check Services
+kubectl describe deployment nginx	Get deployment details
+kubectl describe pods	Get Pod details
+kubectl describe service nginx	Get Service details
+kubectl get pods -o wide	Display Pod IP addresses and nodes
+kubectl logs <pod-name>	View container logs
+To continuously monitor Pods:
+bash
+kubectl get pods -w
+6. Install and configure Nagios Core using Docker
+Nagios Core is an open-source monitoring tool used to monitor server availability, network services and application health.
+ 
+techtarget.com
+Step 1: Verify Docker installation
+bash
+docker --version
+Step 2: Pull a Nagios Docker image
+For example, use the Nagios Core image:
+bash
+docker pull jasonrivers/nagios:latest
+Step 3: Run the Nagios container
+bash
+docker run --name nagios \
+-d \
+-p 8080:80 \
+jasonrivers/nagios:latest
+This command:
+•	Creates a container named nagios.
+•	Runs it in detached mode.
+•	Maps host port 8080 to container port 80.
+Step 4: Check the Nagios container
+bash
+docker ps
+Step 5: Access the Nagios web interface
+Open a browser and enter:
+text
+http://localhost:8080/nagios
+Use the credentials configured by the selected Docker image.
+Step 6: Configure application monitoring
+Nagios can monitor the availability of the Online Boutique Store using HTTP checks.
+For example, add a service configuration:
+text
+define service {
+    use                     generic-service
+    host_name               boutique-server
+    service_description     Boutique Website
+    check_command           check_http
+}
+Configure the corresponding host and ensure that the HTTP check plugin is installed.
+Nagios can monitor:
+•	Application availability.
+•	HTTP response status.
+•	Server availability.
+•	CPU and memory utilization (using suitable monitoring plugins).
+•	Application downtime.
+Step 7: Restart Nagios after configuration changes
+bash
+docker restart nagios
+Scenario-Based Questions
+1. Application running in Minikube, but customers cannot access it through a browser. How will you expose it externally?
+Answer:
+We can expose the application using a Kubernetes NodePort Service.
+Step 1: Create a NodePort Service
+bash
+kubectl expose deployment nginx \
+--type=NodePort \
+--port=7070 \
+--target-port=80
+Step 2: Verify the Service
+bash
+kubectl get svc
+Step 3: Get the Minikube Service URL
+bash
+minikube service nginx --url
+This command generates a URL that can be accessed through a web browser.
+Step 4: Open the generated URL
+For example:
+text
+http://192.168.49.2:30080
+The actual URL and port depend on the Minikube environment.
+ 
+medium.com
+Step 5: Troubleshooting if the application is not accessible
+Execute:
+bash
+kubectl get pods
+kubectl get svc
+kubectl describe svc nginx
+kubectl get endpoints nginx
+minikube status
+Check that:
+•	Pods are in the Running state.
+•	Service selectors match Pod labels.
+•	Service endpoints are available.
+•	The NodePort is correctly assigned.
+•	Minikube is running.
+Conclusion: NodePort exposes the application outside the Kubernetes cluster, and minikube service nginx --url provides the URL to access the application.
+2. Which commands will you execute to verify Nagios service status and configuration?
+Answer:
+We can use Docker and Nagios commands to verify whether Nagios is running properly.
+Step 1: Check whether the Nagios container is running
+bash
+docker ps
+Step 2: Check the Nagios container status
+bash
+docker inspect nagios
+Step 3: View Nagios container logs
+bash
+docker logs nagios
+Step 4: Access the container shell
+bash
+docker exec -it nagios bash
+Step 5: Verify Nagios service status
+Inside the container, execute:
+bash
+service nagios status
+Depending on the Docker image, the service may instead be managed by its startup process or another service manager.
+Step 6: Verify Nagios configuration
+bash
+nagios -v /opt/nagios/etc/nagios.cfg
+This checks the Nagios configuration for errors. The configuration path may vary depending on the Docker image.
+Step 7: Restart Nagios
+bash
+docker restart nagios
+Step 8: Verify through the browser
+text
+http://localhost:8080/nagios
+If the Nagios dashboard opens and displays the configured hosts and services, we can verify that the monitoring interface is accessible.
+3. During a festival sale, deployment is scaled from two to five replicas, but some Pods remain in Pending state. What are the possible reasons and how would you troubleshoot them?
+Answer:
+A Pending state means Kubernetes has not yet successfully scheduled the Pod onto a suitable node or completed its setup.
+Possible reasons
+1.	Insufficient CPU resources: The Minikube node does not have enough CPU to run additional Pods.
+2.	Insufficient memory: Available RAM is insufficient for the new Pods.
+3.	Resource limits: Pod resource requests are higher than the available node capacity.
+4.	Node problems: The Kubernetes node may be NotReady or unavailable.
+5.	Persistent Volume problems: Required storage volumes may not be available.
+6.	Scheduling constraints: Node selectors, taints, tolerations or affinity rules may prevent Pods from being scheduled.
+Troubleshooting steps
+Step 1: Check Pod status
+bash
+kubectl get pods
+Identify the Pods in Pending state.
+Step 2: Describe the Pending Pod
+bash
+kubectl describe pod <pod-name>
+Check the Events section for errors such as:
+text
+Insufficient cpu
+Insufficient memory
+FailedScheduling
+Step 3: Check node status
+bash
+kubectl get nodes
+Step 4: Check node resource availability
+bash
+kubectl describe node minikube
+Check the Allocatable and Allocated resources sections.
+Step 5: Check cluster events
+bash
+kubectl get events --sort-by=.metadata.creationTimestamp
+This displays recent Kubernetes events and scheduling errors.
+Step 6: Increase Minikube resources if required
+Stop Minikube:
+bash
+minikube stop
+Restart with more CPU and memory:
+bash
+minikube start --cpus=4 --memory=8192
+The host machine must have sufficient available resources.
+Step 7: Check the deployment again
+bash
+kubectl get deployments
+kubectl get pods
+Step 8: Verify all five replicas are running
+bash
+kubectl get pods -o wide
+Expected result:
+text
+NAME                     READY   STATUS
+nginx-xxxxxxxxxx-aaaaa   1/1     Running
+nginx-xxxxxxxxxx-bbbbb   1/1     Running
+nginx-xxxxxxxxxx-ccccc   1/1     Running
+nginx-xxxxxxxxxx-ddddd   1/1     Running
+nginx-xxxxxxxxxx-eeeee   1/1     Running
+Conclusion: Pending Pods are generally caused by insufficient resources, node problems, storage issues or scheduling constraints. Using kubectl describe pod, kubectl describe node and kubectl get events helps identify the issue. Increasing Minikube resources or correcting scheduling constraints can resolve it.
+Important commands for practical examination
+Task	Command
+Start Minikube	minikube start
+Check cluster	minikube status
+Create deployment	kubectl create deployment nginx --image=nginx --replicas=2
+Expose application	kubectl expose deployment nginx --type=NodePort --port=7070 --target-port=80
+Scale deployment	kubectl scale deployment nginx --replicas=5
+Check Pods	kubectl get pods
+Check Services	kubectl get svc
+Access application	minikube service nginx --url
+Check events	kubectl get events
+Describe Pod	kubectl describe pod <pod-name>
+Check Docker	docker ps
+Check Nagios logs	docker logs nagios
+Restart Nagios	docker restart nagios
+Final conclusion: Kubernetes helps the Online Boutique Store handle high customer traffic through multiple replicas, NodePort provides external application access, and Nagios Core monitors application and server availability. Together, these technologies improve scalability, reliability and monitoring during festival sales and promotional events.
+
+
+Q2. Jenkins Pipeline for a Maven Web Project with Webhooks (25 Marks)
+1. Clone GitHub Repository
+1.	Open Jenkins Dashboard.
+2.	Go to New Item.
+3.	Enter the name Online-Boutique-Pipeline.
+4.	Select Pipeline and click OK.
+5.	In the Pipeline section, select Pipeline script.
+6.	Use the following Scripted Pipeline:
+groovy
+node {
+    // Clone GitHub Repository
+    stage('Git Clone') {
+        git 'https://github.com/haleema91/LAB-INTERNAL-II-OBS.git'
+    }
+
+    // Maven Clean
+    stage('Clean') {
+        sh 'mvn clean'
+    }
+
+    // Maven Build
+    stage('Build') {
+        sh 'mvn compile'
+    }
+
+    // Maven Test
+    stage('Test') {
+        sh 'mvn test'
+    }
+
+    // Maven Package
+    stage('Package') {
+        sh 'mvn package'
+    }
+
+    // Deploy to Tomcat
+    stage('Deploy') {
+        sh 'cp target/*.war /opt/tomcat/webapps/'
+    }
+}
+Click Save and then Build Now.
+2. Configure Tomcat Web Server
+1.	Install Apache Tomcat on the server.
+2.	Start the Tomcat server.
+3.	Configure the Tomcat username and password in tomcat-users.xml.
+4.	Start Tomcat using:
+bash
+sudo systemctl start tomcat
+5. Access Tomcat using:
+text
+http://localhost:8080
+3. Deploy Application on Web Server
+1. Generate the WAR file using Maven:
+bash
+mvn clean package
+2. Copy the WAR file into Tomcat's webapps directory:
+bash
+cp target/*.war /opt/tomcat/webapps/
+3. Restart Tomcat:
+bash
+sudo systemctl restart tomcat
+4. Access the deployed application:
+text
+http://localhost:8080/OBS
+4. Create Pipeline View and Configure GitHub Webhook
+Step 1: Create Pipeline View
+1.	Open Jenkins Dashboard.
+2.	Click the + icon to add a new view.
+3.	Enter Online-Boutique-View.
+4.	Select Build Pipeline View.
+5.	Click OK and select the pipeline job.
+6.	Click Save.
+Step 2: Configure GitHub Webhook
+1.	Open your GitHub repository.
+2.	Go to Settings → Webhooks → Add webhook.
+3.	Enter the Jenkins webhook URL:
+text
+http://<JENKINS-IP>:8080/github-webhook/
+4.	Set Content type to application/json.
+5.	Select Just the push event.
+6.	Click Add webhook.
+Step 3: Configure Jenkins Build Trigger
+1.	Open the Jenkins pipeline job.
+2.	Click Configure.
+3.	Go to Build Triggers.
+4.	Enable GitHub hook trigger for GITScm polling.
+5.	Click Save.
+Step 4: Test Webhook
+1.	Make a code change in the GitHub repository.
+2.	Commit and push the changes.
+3.	GitHub sends a webhook notification to Jenkins.
+4.	Jenkins automatically triggers the pipeline.
+5.	Check the Build History and Pipeline View to verify execution.
+Scenario-Based Questions
+1. Which Maven command removes previously generated build files?
+bash
+mvn clean
+2. Where should you provide the GitHub repository URL in the Jenkins pipeline?
+In the git command inside the Git Clone stage.
+groovy
+git 'https://github.com/haleema91/LAB-INTERNAL-II-OBS.git'
+3. Which Maven command should you execute to generate the WAR file?
+bash
+mvn package
+
+Q1. Docker Compose – Online Boutique Store (25 Marks)
+1. Create a Docker Compose YAML file
+Docker Compose is used to define and run multiple Docker containers using a single YAML configuration file.
+For the Online Boutique Store, we need two services:
+•	MySQL: Database backend running on port 3306.
+•	Tomcat: Web server running on port 8080.
+Create a file named docker-compose.yml.
+Docker Compose YAML file:
+yaml
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: boutique-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: boutique
+      MYSQL_USER: boutiqueuser
+      MYSQL_PASSWORD: boutique123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - boutique-network
+
+  tomcat:
+    image: tomcat:9.0
+    container_name: boutique-tomcat
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - boutique-network
+
+volumes:
+  mysql_data:
+
+networks:
+  boutique-network:
+    driver: bridge
+2. Configure port mappings and persistent volumes
+Port mappings:
+Service	Container Port	Host Port
+MySQL	3306	3306
+Tomcat	8080	8080
+•	3306:3306 exposes MySQL on port 3306.
+•	8080:8080 exposes Tomcat on port 8080.
+Persistent volume:
+yaml
+volumes:
+  - mysql_data:/var/lib/mysql
+This stores MySQL database files in a Docker-managed volume so that data remains available even if the MySQL container is removed and recreated.
+Custom network:
+yaml
+networks:
+  boutique-network:
+    driver: bridge
+Both containers are connected to the same custom network. Tomcat can communicate with MySQL using the hostname mysql and port 3306.
+3. Start both containers using Docker Compose
+Open the terminal in the directory containing docker-compose.yml.
+Step 1: Start the containers
+bash
+docker compose up -d
+The -d option runs containers in detached mode (background).
+Step 2: Download images if required
+Docker Compose automatically downloads the required images if they are not already available locally.
+Step 3: Check the services
+bash
+docker compose ps
+4. Verify running containers using Docker Compose
+Execute:
+bash
+docker compose ps
+Expected output (illustrative):
+text
+NAME              IMAGE        STATUS
+boutique-mysql    mysql:8.0    Up
+boutique-tomcat   tomcat:9.0   Up
+To view container logs:
+bash
+docker compose logs
+To view logs of a particular service:
+bash
+docker compose logs mysql
+docker compose logs tomcat
+5. Access Tomcat server through a web browser
+1.	Open Google Chrome or any web browser.
+2.	Enter the following URL:
+text
+http://localhost:8080
+3. The Apache Tomcat welcome page should appear if Tomcat is running correctly.
+ 
+Expected result Tomcat server is accessible through port 8080.
+Scenario-Based Questions
+Scenario 1: Configure port mappings and a custom Docker network
+Question: How do you configure port mappings and a custom Docker network to access Tomcat through a browser and allow communication with MySQL?
+Answer:
+We configure both services in the Docker Compose file.
+1. Port mapping configuration:
+yaml
+ports:
+  - "8080:8080"
+This allows users to access Tomcat through:
+text
+http://localhost:8080
+For MySQL:
+yaml
+ports:
+  - "3306:3306"
+This exposes MySQL on the host's port 3306.
+2. Create a custom Docker network:
+yaml
+networks:
+  boutique-network:
+    driver: bridge
+3. Connect both containers to the network:
+yaml
+services:
+  mysql:
+    image: mysql:8.0
+    networks:
+      - boutique-network
+
+  tomcat:
+    image: tomcat:9.0
+    networks:
+      - boutique-network
+4. Configure database connectivity:
+The Tomcat application should use the following MySQL connection details:
+Parameter	Value
+Database hostname	mysql
+Port	3306
+Database name	boutique
+Username	boutiqueuser
+Password	boutique123
+Example JDBC URL:
+text
+jdbc:mysql://mysql:3306/boutique
+Result:
+•	Users can access Tomcat using http://localhost:8080.
+•	Tomcat can communicate with MySQL using mysql:3306.
+•	Both containers communicate securely through the custom Docker network.
+Scenario 2: MySQL data lost after removing and recreating the container
+Question: Why does this happen, and how can Docker Compose volumes preserve database data?
+Answer:
+Reason for data loss:
+When a MySQL container is removed, the data stored inside its writable container filesystem is also removed.
+If persistent storage is not configured, customer registration details and product information may be lost.
+Solution: Use Docker volumes.
+Add the following configuration to the Docker Compose file:
+yaml
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: boutique-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: boutique
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+Explanation:
+•	mysql_data is a named Docker volume.
+•	/var/lib/mysql is the directory where MySQL stores database files.
+•	The volume stores database data independently of the container.
+•	Even if the container is deleted and recreated, the database data remains in the volume.
+Commands to verify persistent storage:
+Check available volumes:
+bash
+docker volume ls
+Inspect the volume:
+bash
+docker volume inspect mysql_data
+Recreate containers:
+bash
+docker compose down
+docker compose up -d
+The existing database data will be reused.
+Result Customer registration and product information remain محفوظ (preserved) even after container recreation, provided the named volume is not deleted.
+Important: Avoid using docker compose down -v because it deletes the Compose-managed named volumes as well.
+Scenario 3: Tomcat Connection Refused error
+Question: When accessing http://localhost:8080, you receive a Connection Refused error. How do you troubleshoot the problem?
+Answer:
+Follow these troubleshooting steps.
+Step 1: Check whether the Tomcat container is running
+Execute:
+bash
+docker compose ps
+If Tomcat is stopped, start it:
+bash
+docker compose up -d
+You can also check all running containers:
+bash
+docker ps
+Step 2: Check Tomcat container logs
+Execute:
+bash
+docker compose logs tomcat
+To continuously monitor logs:
+bash
+docker compose logs -f tomcat
+Check for errors such as:
+•	Port binding errors.
+•	Application deployment failures.
+•	Java configuration errors.
+•	Database connection failures.
+Step 3: Verify port mappings
+Execute:
+bash
+docker port boutique-tomcat
+Expected output:
+text
+8080/tcp -> 0.0.0.0:8080
+If the port mapping is incorrect, verify the Compose configuration:
+yaml
+ports:
+  - "8080:8080"
+Restart the containers:
+bash
+docker compose up -d
+Step 4: Troubleshoot MySQL database connection
+Check whether MySQL is running:
+bash
+docker compose ps
+Check MySQL logs:
+bash
+docker compose logs mysql
+Check whether MySQL is ready:
+bash
+docker compose exec mysql mysqladmin ping -h localhost -u root -p
+Verify that the Tomcat application uses the correct database hostname:
+text
+mysql
+The JDBC connection URL should be:
+text
+jdbc:mysql://mysql:3306/boutique
+Important: Inside the Tomcat container, use mysql as the hostname instead of localhost. The hostname localhost refers to the Tomcat container itself.
+Also verify that:
+•	Both containers belong to the same Docker network.
+•	MySQL username and password are correct.
+•	The MySQL database has been initialized.
+•	The application has the required MySQL JDBC driver.
+Step 5: Test Tomcat in the browser
+Open:
+text
+http://localhost:8080
+If Tomcat is running and the port is correctly mapped, the Tomcat welcome page should appear.
+Step 6: Safely stop and remove containers
+To stop the containers:
+bash
+docker compose stop
+To stop and remove containers and the Compose network:
+bash
+docker compose down
+To remove containers, networks, and named volumes (only when intentionally deleting database data):
+bash
+docker compose down -v
+Warning: Do not use -v if you want to preserve MySQL data.
+Important Docker Compose commands – Quick Revision
+Command	Purpose
+docker compose up -d	Start containers in background
+docker compose ps	List Compose containers
+docker compose logs	Display container logs
+docker compose logs -f	Follow logs continuously
+docker compose stop	Stop containers
+docker compose start	Start stopped containers
+docker compose restart	Restart containers
+docker compose down	Stop and remove containers and network
+docker volume ls	List Docker volumes
+docker network ls	List Docker networks
+docker ps	Display running containers
+Final Conclusion
+Docker Compose simplifies the deployment of multi-container applications. In the Online Boutique Store:
+1.	MySQL provides database services on port 3306.
+2.	Tomcat provides web services on port 8080.
+3.	A custom bridge network enables communication between containers.
+4.	Persistent Docker volumes protect database information from container deletion.
+5.	Docker Compose commands help start, stop, monitor, and troubleshoot containers.
+Thus, Docker Compose provides an easy and reliable way to deploy and manage the Online Boutique Store application.
+
+
+
+
+
+
 Testing Jenkins CI using GitHub Webhook.
 
 
