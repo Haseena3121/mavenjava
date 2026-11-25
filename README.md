@@ -1,4 +1,11 @@
-# **Experiment 10: Working with Minikube and Nagios**
+Maven pom.xml File — Theory and Purpose
+In Maven, the pom.xml (Project Object Model) file is the central configuration and declaration file that defines a project’s structure, dependencies, build process, and additional settings 
+GeeksForGeeks
+GeeksForGeeks
++1
+. It is the “theory” of the Maven build: Maven reads the pom.xml to understand what the project contains, how to build it, and what tools or resources to use.
+ 
+ 10: Working with Minikube and Nagios**
 
 # **Part A — Minikube (Kubernetes)**
 
