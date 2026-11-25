@@ -1367,3 +1367,565 @@ docker compose up -d
 ```
 
 Then continue with Practical 2, 3, 4, and 5 in the order above.
+
+
+6)Bro, now I see what you mean. I checked the remaining pages of your record — **Experiment 6 continues after command 23, then has command 24, an optional logout step, and 15 scenario-based questions.** I was only giving you the first part. Sorry for making you ask repeatedly.
+
+I'll give you the complete experiment: the numbered commands, what each does, and the scenario questions with answers. I'm following your lab record, and I'll explain the commands so you can actually perform them and understand them for viva.&#x20;
+
+SE_record_final.pdf
+
+
+
+# **Experiment 6 – Docker**
+
+## **Part A: Dockerfile and image creation**
+
+### **Step 1: Open your project folder**
+
+Open VS Code and open:
+
+```
+C:\DockerProjects\Redis
+```
+
+Open the terminal using **Terminal → New Terminal**.
+
+Run:
+
+```
+cd C:\DockerProjects\Redis
+```
+
+Your `Dockerfile` should contain:
+
+```
+FROM redis:latest
+CMD ["redis-server"]
+```
+
+Save the file.
+
+### **Step 2: Build the image**
+
+```
+docker build -t redisnew .
+```
+
+- `docker build` builds an image.
+- `-t redisnew` gives the image the name `redisnew`.
+- `.` means the current folder.
+
+### **Step 3: Run a container**
+
+```
+docker run --name myredisnew -d redisnew
+```
+
+- `--name myredisnew` gives the container a name.
+- `-d` runs it in the background.
+- `redisnew` is the image used to create the container.
+
+### **Step 4: Check running containers**
+
+```
+docker ps
+```
+
+Displays containers that are currently running.
+
+### **Step 5: Stop the container**
+
+```
+docker stop myredisnew
+```
+
+Stops the container without deleting it.
+
+### **Step 6: Login to Docker Hub**
+
+```
+docker login
+```
+
+Logs into your Docker Hub account so you can upload images.
+
+### **Step 7: Display all containers**
+
+```
+docker ps -a
+```
+
+Displays running and stopped containers.
+
+### **Step 8: Commit the container as an image**
+
+First, find the container ID:
+
+```
+docker ps -a
+```
+
+Then:
+
+```
+docker commit CONTAINER_ID YOUR_USERNAME/redis1
+```
+
+Example from your manual:
+
+```
+docker commit 0e993d2009a1 budarajumadhurika/redis1
+```
+
+Use your actual container ID and your Docker Hub username.
+
+`docker commit` creates a new image from a container.
+
+### **Step 9: Display images**
+
+```
+docker images
+```
+
+Lists all images stored on your computer.
+
+### **Step 10: Push the image**
+
+```
+docker push YOUR_USERNAME/redis1
+```
+
+Uploads your image to Docker Hub.
+
+## **Part B: Remove and download the image**
+
+### **Step 11: Remove the container**
+
+```
+docker rm CONTAINER_ID
+```
+
+Removes the container. If it is running, stop it first.
+
+### **Step 12: Remove the image**
+
+```
+docker rmi YOUR_USERNAME/redis1
+```
+
+Deletes the image from your local computer.
+
+### **Step 13: Check all containers**
+
+```
+docker ps -a
+```
+
+Checks the container list after removal.
+
+### **Step 14: Logout from Docker Hub**
+
+```
+docker logout
+```
+
+Logs out of Docker Hub and removes the saved login credentials.
+
+### **Step 15: Pull the image from Docker Hub**
+
+```
+docker pull YOUR_USERNAME/redis1
+```
+
+Downloads the image from Docker Hub to your computer.
+
+### **Step 16: Run a container using the downloaded image**
+
+```
+docker run --name myredis -d YOUR_USERNAME/redis1
+```
+
+Creates and starts a new container named `myredis`.
+
+### **Step 17: Enter Redis CLI**
+
+```
+docker exec -it myredis redis-cli
+```
+
+Opens the Redis command-line interface inside the running container.
+
+### **Step 18: Store data in Redis**
+
+Inside Redis CLI, type:
+
+```
+SET name "Abcdef"
+```
+
+Stores the value `Abcdef` under the key `name`.
+
+### **Step 19: Retrieve data**
+
+```
+GET name
+```
+
+Expected output:
+
+```
+"Abcdef"
+```
+
+### **Step 20: Exit Redis CLI**
+
+```
+exit
+```
+
+Returns you to the normal terminal.
+
+### **Step 21: Display all containers**
+
+```
+docker ps -a
+```
+
+Checks the status of all containers.
+
+### **Step 22: Stop the container**
+
+```
+docker stop myredis
+```
+
+Stops the container named `myredis`.
+
+### **Step 23: Remove the container**
+
+```
+docker rm CONTAINER_ID
+```
+
+Removes the `myredis` container. Use its actual container ID.
+
+### **Step 24: Display images**
+
+```
+docker images
+```
+
+Lists the images remaining on your system.
+
+### **Step 25: Remove the image again**
+
+This is the additional command on page 84 of your record:
+
+```
+docker rmi YOUR_USERNAME/redis1
+```
+
+Deletes the image `YOUR_USERNAME/redis1` from your local system.
+
+### **Optional: Logout**
+
+Your record also includes an optional logout step:
+
+```
+docker logout
+```
+
+This removes your saved Docker Hub login credentials.
+
+# **Part C: 15 Scenario-based questions with answers**
+
+These are the scenario questions from pages 84–87 of your record, with the commands and explanations.
+
+## **Scenario 1**
+
+**Question:** Your application is running inside Docker, but you are not sure if the container is active. Which command helps you check running containers?
+
+```
+docker ps
+```
+
+**Explanation:** Displays only currently running containers.
+
+## **Scenario 2**
+
+**Question:** One of your containers is consuming high CPU and you want to stop it. How do you stop a running container named `web_app`?
+
+```
+docker stop web_app
+```
+
+**Explanation:** Stops the container named `web_app`.
+
+## **Scenario 3**
+
+**Question:** You have written a Dockerfile in your project directory and want to build an image named `myapi`. What command do you use?
+
+```
+docker build -t myapi .
+```
+
+**Explanation:** Builds an image named `myapi` from the Dockerfile in the current directory.
+
+## **Scenario 4**
+
+**Question:** You want to run your `web_app` container and expose its internal port 5000 on host port 8080. Which command should you use?
+
+```
+docker run -d --name web_app -p 8080:5000 IMAGE_NAME
+```
+
+**Explanation:**
+
+- `8080` is the host port.
+- `5000` is the container port.
+- `-p` maps the host port to the container port.
+- Replace `IMAGE_NAME` with the image you want to run.
+
+## **Scenario 5**
+
+**Question:** Your container is running, but you want to go inside and debug it using a shell. What CLI command helps you enter the container's shell?
+
+```
+docker exec -it web_app /bin/sh
+```
+
+**Explanation:** Opens a shell inside the running container.
+
+## **Scenario 6**
+
+**Question:** You have built a few test images and want to delete one called `old_api`. How would you do this?
+
+```
+docker rmi old_api
+```
+
+**Explanation:** Removes the image named `old_api`.
+
+If the image has a tag, such as `old_api:latest`, use that exact name.
+
+## **Scenario 7**
+
+**Question:** Your application crashed inside the container. You need to check the logs. How do you do this?
+
+```
+docker logs web_app
+```
+
+**Explanation:** Displays the logs generated by the container named `web_app`.
+
+## **Scenario 8**
+
+**Question:** You want to start a container and let it run in the background. Which command should you use?
+
+```
+docker run -d --name mycontainer IMAGE_NAME
+```
+
+**Explanation:** Creates and starts a container in detached mode.
+
+## **Scenario 9**
+
+**Question:** You are not sure which container is using port 3000. How do you check?
+
+```
+docker ps --filter "publish=3000"
+```
+
+**Explanation:** Filters the running containers to show those publishing host port 3000.
+
+## **Scenario 10**
+
+**Question:** You built an image but forgot to tag it. How do you tag it now?
+
+```
+docker tag IMAGE_NAME myapi:latest
+```
+
+**Explanation:** Gives an existing image a new name or tag.
+
+For example:
+
+```
+docker tag redisnew myapi:latest
+```
+
+## **Scenario 11**
+
+**Question:** You want to export an image to a `.tar` file for offline transfer. How do you export it?
+
+```
+docker save -o myapi.tar myapi
+```
+
+**Explanation:**
+
+- `docker save` exports an image.
+- `-o myapi.tar` specifies the output file.
+- `myapi` is the image name.
+
+The file can be transferred to another computer.
+
+## **Scenario 12**
+
+**Question:** You want to restart a container automatically if it crashes. What Docker CLI command do you use?
+
+```
+docker run --restart=always -d --name mycontainer IMAGE_NAME
+```
+
+**Explanation:** The `--restart=always` policy tells Docker to automatically restart the container if it stops.
+
+For an already-created container, you can set the policy using:
+
+```
+docker update --restart=always mycontainer
+```
+
+## **Scenario 13**
+
+**Question:** You want to see how much CPU and RAM each container uses. What command do you use? How do you control or limit RAM and measure actual memory usage?
+
+### **Check CPU and RAM usage**
+
+```
+docker stats
+```
+
+Displays live resource usage of running containers.
+
+### **Limit RAM**
+
+```
+docker run --memory="512m" -d --name myredis redisnew
+```
+
+This limits the container's memory to 512 MB.
+
+### **Measure actual memory usage**
+
+```
+docker stats
+```
+
+This displays the current memory usage and memory limit.
+
+## **Scenario 14**
+
+**Question:** You want your container to run a shell command before starting the app. What do you include in the Dockerfile?
+
+A Dockerfile can use:
+
+```
+RUN echo "Preparing application"
+```
+
+**Explanation:** `RUN` executes a command while building the image.
+
+For a command that should execute when the container starts, use `CMD` or `ENTRYPOINT`.
+
+Example:
+
+```
+CMD ["redis-server"]
+```
+
+Your existing Redis Dockerfile already uses `CMD` to start Redis when the container runs.
+
+## **Scenario 15**
+
+**Question:** You want to create a custom Nginx image with your static files. What do you do?
+
+### **Step 1: Create a Dockerfile**
+
+```
+FROM nginx:latest
+COPY index.html /usr/share/nginx/html/
+```
+
+### **Step 2: Build the image**
+
+```
+docker build -t my-nginx .
+```
+
+### **Step 3: Run the container**
+
+```
+docker run -d --name my-nginx -p 8080:80 my-nginx
+```
+
+**Explanation:**
+
+- `FROM nginx:latest` uses the Nginx image as the base.
+- `COPY` copies your HTML file into the Nginx web directory.
+- `docker build` creates your custom image.
+- `-p 8080:80` maps host port 8080 to Nginx's container port 80.
+
+You can then open this in your browser:
+
+```
+http://localhost:8080
+```
+
+## **Important commands to remember for viva**
+
+| Command         | Purpose                                      |
+| --------------- | -------------------------------------------- |
+| `docker build`  | Build an image                               |
+| `docker run`    | Create and start a container                 |
+| `docker ps`     | Show running containers                      |
+| `docker ps -a`  | Show all containers                          |
+| `docker stop`   | Stop a container                             |
+| `docker start`  | Start a stopped container                    |
+| `docker rm`     | Remove a container                           |
+| `docker rmi`    | Remove an image                              |
+| `docker images` | List images                                  |
+| `docker exec`   | Execute a command inside a running container |
+| `docker logs`   | Display container logs                       |
+| `docker stats`  | Display CPU and memory usage                 |
+| `docker tag`    | Add or change an image tag                   |
+| `docker save`   | Export an image to a tar file                |
+| `docker commit` | Create an image from a container             |
+| `docker pull`   | Download an image                            |
+| `docker push`   | Upload an image                              |
+| `docker login`  | Login to Docker Hub                          |
+| `docker logout` | Logout from Docker Hub                       |
+
+**Now this includes the full Docker command section, the additional command 25, the optional logout, and all 15 scenario questions from your record.**
+
+5)Docker cli
+# 1. Download Redis image
+docker pull redis
+
+# 2. Create and run Redis container
+docker run --name my-redis -d redis
+
+# 3. Check running containers
+docker ps
+
+# 4. Access Redis CLI
+docker exec -it my-redis redis-cli
+
+# Inside Redis CLI:
+SET name "Alice"
+GET name
+exit
+
+# 5. Stop container
+docker stop my-redis
+
+# 6. Start container again
+docker start my-redis
+
+# 7. Stop and remove container
+docker stop my-redis
+docker rm my-redis
+
+# 8. Remove Redis image
+docker rmi redis
